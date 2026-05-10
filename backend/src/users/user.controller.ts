@@ -132,8 +132,12 @@ export class UserController {
     storage: diskStorage({
       destination: (req: any, file: any, cb: any) => {
         const uploadPath = './data/uploads/avatars';
-        if (!existsSync(uploadPath)) {
-          mkdirSync(uploadPath, { recursive: true });
+        try {
+          if (!existsSync(uploadPath)) {
+            mkdirSync(uploadPath, { recursive: true });
+          }
+        }catch(err) {
+          console.log(err.message)
         }
         cb(null, uploadPath);
       },
